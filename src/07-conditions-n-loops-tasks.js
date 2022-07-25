@@ -27,8 +27,17 @@
  *  21 => 'Fizz'
  *
  */
-function getFizzBuzz(/* num */) {
-  throw new Error('Not implemented');
+function getFizzBuzz(num) {
+  if (num % 15 === 0) {
+    return 'FizzBuzz';
+  }
+  if (num % 5 === 0) {
+    return 'Buzz';
+  }
+  if (num % 3 === 0) {
+    return 'Fizz';
+  }
+  return num;
 }
 
 
@@ -43,8 +52,12 @@ function getFizzBuzz(/* num */) {
  *   5  => 120
  *   10 => 3628800
  */
-function getFactorial(/* n */) {
-  throw new Error('Not implemented');
+function getFactorial(n) {
+  let res = 1;
+  for (let i = 1; i <= n; i += 1) {
+    res *= i;
+  }
+  return res;
 }
 
 
@@ -60,8 +73,12 @@ function getFactorial(/* n */) {
  *   5,10  =>  45 ( = 5+6+7+8+9+10 )
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
-function getSumBetweenNumbers(/* n1, n2 */) {
-  throw new Error('Not implemented');
+function getSumBetweenNumbers(n1, n2) {
+  let sum = 0;
+  for (let i = n1; i <= n2; i += 1) {
+    sum += i;
+  }
+  return sum;
 }
 
 
@@ -80,8 +97,11 @@ function getSumBetweenNumbers(/* n1, n2 */) {
  *   10,1,1   =>  false
  *   10,10,10 =>  true
  */
-function isTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isTriangle(a, b, c) {
+  if (a + b <= c || a + c <= b || c + b <= a) {
+    return false;
+  }
+  return true;
 }
 
 
@@ -117,9 +137,26 @@ function isTriangle(/* a, b, c */) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rect1, rect2) {
+  if (((rect1.top >= rect2.top && rect1.top <= rect2.top + rect2.height)
+  || (rect1.top + rect1.height >= rect2.top && rect1.top + rect1.height <= rect2.top + rect2.height)
+  || (rect1.top >= rect2.top && rect1.top + rect1.height <= rect2.top + rect2.height)
+  || (rect2.top >= rect1.top && rect2.top + rect2.height <= rect1.top + rect1.height))
+  && (((rect1.left >= rect2.left && rect1.left <= rect2.left + rect2.width)
+  || (rect1.left + rect1.width >= rect2.left
+  && rect1.left + rect1.width <= rect2.left + rect2.width))
+  || (rect1.left >= rect2.left && rect1.left + rect1.width <= rect2.left + rect2.width)
+  || (rect2.left >= rect1.left && rect2.left + rect2.width <= rect1.left + rect1.width))) {
+    return true;
+  }
+  return false;
 }
+// console.log(doRectanglesOverlap({
+//   top: 0, left: 0, width: 90, height: 90,
+// },
+// {
+//   top: 25, left: 25, width: 10, height: 10,
+// }))
 
 
 /**
@@ -164,10 +201,15 @@ function isInsideCircle(/* circle, point */) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  const arr = str.split('');
+  for (let i = 0; i < arr.length; i += 1) {
+    if (![...arr.slice(0, i), ...arr.slice(i + 1)].includes(arr[i])) {
+      return arr[i];
+    }
+  }
+  return null;
 }
-
 
 /**
  * Returns the string representation of math interval,
@@ -191,8 +233,8 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  return `${isStartIncluded ? '[' : '('}${a <= b ? a : b}, ${b >= a ? b : a}${isEndIncluded ? ']' : ')'}`;
 }
 
 
@@ -208,8 +250,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
@@ -225,8 +267,8 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return +num.toString().split('').reverse().join('');
 }
 
 
@@ -250,8 +292,21 @@ function reverseInteger(/* num */) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const digitArr = ccn.toString().split('');
+  let sum = 0;
+  const parity = digitArr.length % 2;
+  for (let i = 0; i < digitArr.length; i += 1) {
+    let digit = +digitArr[i];
+    if (i % 2 === parity) {
+      digit *= 2;
+    }
+    if (digit > 9) {
+      digit -= 9;
+    }
+    sum += digit;
+  }
+  return sum % 10 === 0;
 }
 
 /**
@@ -268,8 +323,12 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  let sum = num;
+  while (sum > 9) {
+    sum = sum.toString().split('').reduce((a, b) => +a + +b);
+  }
+  return sum;
 }
 
 
@@ -294,9 +353,16 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  if (!str) return true;
+  const brackets = new Map([['[', ']'], ['(', ')'], ['{', '}'], ['<', '>']]);
+  const terminalBracket = str.indexOf(brackets.get(str[0]));
+  if (terminalBracket === -1) return false;
+  if (!isBracketsBalanced(str.slice(1, terminalBracket))) return false;
+  if (!isBracketsBalanced(str.slice(terminalBracket + 1))) return false;
+  return true;
 }
+// console.log(isBracketsBalanced('[((<>))]'));
 
 
 /**
@@ -394,10 +460,30 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
-}
+function evaluateTicTacToePosition(position) {
+  let diagonalLR = [];
+  let diagonalRL = [];
+  for (let i = 0; i < 3; i += 1) {
+    const row = position[i].join('');
+    diagonalLR.push(position[i][i]);
+    const rowRev = [...position[i]].reverse();
+    diagonalRL.push(rowRev[i]);
+    let column = [];
 
+    for (let j = 0; j < 3; j += 1) {
+      column.push(position[j][i]);
+    }
+
+    column = column.join('');
+    if (column === 'XXX' || row === 'XXX') return 'X';
+    if (column === '000' || row === '000') return '0';
+  }
+  diagonalLR = diagonalLR.join('');
+  diagonalRL = diagonalRL.join('');
+  if (diagonalLR === 'XXX' || diagonalRL === 'XXX') return 'X';
+  if (diagonalLR === '000' || diagonalRL === '000') return '0';
+  return undefined;
+}
 
 module.exports = {
   getFizzBuzz,
