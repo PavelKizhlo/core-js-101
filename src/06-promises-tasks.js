@@ -102,17 +102,9 @@ function getFastestPromise(array) {
  *    });
  *
  */
-async function chainPromises(array, action) {
-  try {
-    const res = await array.reduce(action);
-    return res;
-  } catch (e) {
-    throw new Error('oops');
-  }
+function chainPromises(/* array, action */) {
+  throw new Error('Not implemented');
 }
-// const promises = [Promise.resolve(1), Promise.resolve(2), Promise.resolve(3)];
-// const p = chainPromises(promises, (a, b) => a + b);
-// console.log(p)
 
 module.exports = {
   willYouMarryMe,
