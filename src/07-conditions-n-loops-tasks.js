@@ -185,8 +185,8 @@ function doRectanglesOverlap(rect1, rect2) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
+function isInsideCircle(circle, point) {
+  return (point.x - circle.center.x) ** 2 + (point.y - circle.center.y) ** 2 < circle.radius ** 2;
 }
 
 
@@ -396,10 +396,27 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
-}
+function getCommonDirectoryPath(pathes) {
+  const pathesArr = pathes.map((item) => [...item.split('/')]);
+  const testPath = pathes[0].split('/');
+  let commonPath = [];
 
+  for (let i = 0; i < pathes.length; i += 1) {
+    const path = pathesArr[i];
+    commonPath.push([]);
+    for (let j = 0; j < path.length; j += 1) {
+      const dir = path[j];
+      const testDir = testPath[j];
+      if (dir === testDir) {
+        commonPath[i].push(dir);
+      }
+    }
+  }
+  commonPath = commonPath.sort((a, b) => a.length - b.length).slice(0, 1).flat(1);
+  if (commonPath.length === 1 && !commonPath[0]) return '/';
+  if (!commonPath.length) return '';
+  return `${commonPath.join('/')}/`;
+}
 
 /**
  * Returns the product of two specified matrixes.
@@ -419,8 +436,23 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const m1Rows = m1.length;
+  const m1Cols = m1[0].length;
+  const m2Cols = m2[0].length;
+
+  const res = Array(m1Rows);
+
+  for (let i = 0; i < m1Rows; i += 1) {
+    res[i] = new Array(m2Cols);
+    for (let j = 0; j < m2Cols; j += 1) {
+      res[i][j] = 0;
+      for (let k = 0; k < m1Cols; k += 1) {
+        res[i][j] += m1[i][k] * m2[k][j];
+      }
+    }
+  }
+  return res;
 }
 
 
