@@ -138,7 +138,7 @@ const cssSelectorBuilder = {
       if (this.elementCall) throw new Error('Element, id and pseudo-element should not occur more then one time inside the selector');
       if (this.idCall || this.classCall || this.attributeCall
           || this.pseudoClassCall || this.pseudoElementCall) {
-        throw new Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+        throw Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
       }
       this.elementCall = true;
       this.selector.push(value);
@@ -154,7 +154,7 @@ const cssSelectorBuilder = {
     if (this.selector) {
       if (this.idCall) throw new Error('Element, id and pseudo-element should not occur more then one time inside the selector');
       if (this.classCall || this.attributeCall || this.pseudoClassCall || this.pseudoElementCall) {
-        throw new Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+        throw Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
       }
       this.idCall = true;
       this.selector.push(`#${value}`);
@@ -169,7 +169,7 @@ const cssSelectorBuilder = {
   class(value) {
     if (this.selector) {
       if (this.attributeCall || this.pseudoClassCall || this.pseudoElementCall) {
-        throw new Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+        throw Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
       }
       this.classCall = true;
       this.selector.push(`.${value}`);
@@ -184,7 +184,7 @@ const cssSelectorBuilder = {
   attr(value) {
     if (this.selector) {
       if (this.pseudoClassCall || this.pseudoElementCall) {
-        throw new Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+        throw Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
       }
       this.attributeCall = true;
       this.selector.push(`[${value}]`);
@@ -199,7 +199,7 @@ const cssSelectorBuilder = {
   pseudoClass(value) {
     if (this.selector) {
       if (this.pseudoElementCall) {
-        throw new Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+        throw Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
       }
       this.pseudoClassCall = true;
       this.selector.push(`:${value}`);
@@ -236,9 +236,6 @@ const cssSelectorBuilder = {
     return this.selector.join('');
   },
 };
-
-const builder = cssSelectorBuilder;
-builder.pseudoElement('after').id('id');
 
 
 module.exports = {
